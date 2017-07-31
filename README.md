@@ -4,6 +4,7 @@ This shiny app assists in the calculation of stream discharge from a salt slug i
 
 The app requires a .csv file with the salt wave to and from background condutivity; along with other slug injection parameters.
 
+Several example datasets are included as .csv files.  This file will be updated with example parameters to match the data.
 
 
 
