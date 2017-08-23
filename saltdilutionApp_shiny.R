@@ -40,6 +40,10 @@ ui <-
                                        min = 0),
                           numericInput("EC_bg", "Background conductivity (μS/cm):", 0,
                                        min = 0, step = 0.1),
+                          h4("Time Interval Testing"),
+                          checkboxInput("TestCheck","Check to select every nth sample (logger time) from dataset. Be sure to match time interval above with selected below.",value=FALSE),
+                          numericInput("TimeTest", "Logger time interval (s):", 1,
+                                       min = 0),
                           helpText("This app is intended to calculate discharge using a slug injection of salt, it requires 
                                         data recorded with a conductivity logger and a concentration factor of the response of
                                         conductivity against NaCl and the amount of salt injected."),    
@@ -130,6 +134,13 @@ server <- function(input, output) {
       return(NULL)
     
     data <- as.data.frame(read.csv(inFile$datapath, sep=",", header=FALSE,col.names = c("EC")))
+   
+    if (input$TestCheck==TRUE) {
+      data <- as.data.frame(data[seq(1,nrow(data),input$TimeTest),])
+      colnames(data) <- "EC"
+    } else {
+    }
+     
     data$Time <- as.numeric(row.names(data))
     data$Time <- data$Time*input$Time_Interval
     data
